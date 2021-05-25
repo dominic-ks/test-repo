@@ -1,5 +1,8 @@
 name: learn-github-actions
-on: [push]
+on:
+  push:
+    tags:
+      - "v*"
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
@@ -10,6 +13,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
-          title: "Production Build"
+          title: ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
           files: |
             release.txt
